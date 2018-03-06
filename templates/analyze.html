@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}
+  Analyze Hand | Jacks or Better
+{% endblock %}
+
+{% block content %}
+  <h1>Analyze Hand</h1>
+  {% for card in cards %}
+    <img src="static/cards/{{ card }}.png" height="200px"
+      {% if card in hold_cards %} style="border: 3px solid maroon" {% endif %}>
+  {% endfor %}
+  <h2>{{ score }}</h2>
+  <h3><a href="/">Analyze another hand</h3>
+{% endblock %}
