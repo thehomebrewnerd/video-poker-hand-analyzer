@@ -10,7 +10,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def pick_hand():
-
     rank_dict = {
         2:'2',
         3:'3',

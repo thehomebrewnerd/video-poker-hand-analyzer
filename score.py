@@ -12,6 +12,7 @@ def score_straight_flush(hand):
     return score_straight(hand) and score_flush(hand)
 
 def score_four_of_a_kind(hand):
+    #must have four cards with the same rank
     rank_list = [card.rank for card in hand.cards]
     rank_set = set(rank_list)
     counts = [rank_list.count(rank) for rank in rank_set]
