@@ -11,11 +11,11 @@ Pick a Hand
   </div>
 
   <div class="row">
-    <img src="static/cards/blank_card.png" height=200px, id="1" class="mr-2">
-    <img src="static/cards/blank_card.png" height=200px, id="2" class="mr-2">
-    <img src="static/cards/blank_card.png" height=200px, id="3" class="mr-2">
-    <img src="static/cards/blank_card.png" height=200px, id="4" class="mr-2">
-    <img src="static/cards/blank_card.png" height=200px, id="5" class="mr-2">
+    <img src="static/cards/blank_card.png" height=200px, id="1" class="mr-2 mt-2">
+    <img src="static/cards/blank_card.png" height=200px, id="2" class="mr-2 mt-2">
+    <img src="static/cards/blank_card.png" height=200px, id="3" class="mr-2 mt-2">
+    <img src="static/cards/blank_card.png" height=200px, id="4" class="mr-2 mt-2">
+    <img src="static/cards/blank_card.png" height=200px, id="5" class="mr-2 mt-2">
   </div>
   <div class="row mt-3">
     <button id="7" style="display: inline" class="btn btn-primary mr-3" onClick="reset_cards()">Reset Selection</button>
@@ -23,13 +23,13 @@ Pick a Hand
   </div>
 
   <div class="row mt-3">
-    <h3>Selected five cards from the deck below to make a hand</h3>
+    <h3>Select <span id="cards_to_pick">5</span> cards from the deck below to make a hand</h3>
   </div>
 
   {% for suit in suits %}
   <div class="row mt-2">
     {% for rank in ranks %}
-      <img src="static/cards/{{ rank }}{{ suit }}.png" height="100px" onClick="card_click(this.id)" id="{{ rank }}{{ suit }}" class="mr-2">
+      <img src="static/cards/{{ rank }}{{ suit }}.png" height="100px" onClick="card_click(this.id)" id="{{ rank }}{{ suit }}" class="mr-2 mt-2">
     {% endfor %}
   </div>
   {% endfor %}
@@ -40,12 +40,15 @@ Pick a Hand
 var click_count = 0;
 var link_string = "/";
 var clicked_cards = [];
+var cards_left = 5;
 
 function card_click(clicked_id)
 {
   if ((!clicked_cards.includes(clicked_id)) & (click_count < 5)) {
     clicked_cards.push(clicked_id);
     click_count++;
+    cards_left = 5 - click_count;
+    document.getElementById("cards_to_pick").innerHTML=cards_left.toString();
     src_string="static/cards/" + clicked_id + ".png";
     link_string = link_string + clicked_id;
     if (click_count < 5) {
@@ -80,6 +83,8 @@ function reset_cards()
   click_count = 0;
   link_string = "/";
   clicked_cards = [];
+  cards_left = 5;
+  document.getElementById("cards_to_pick").innerHTML=cards_left.toString();
 }
 </script>
 
