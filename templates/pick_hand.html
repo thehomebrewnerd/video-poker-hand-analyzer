@@ -5,22 +5,36 @@ Pick a Hand
 {% endblock %}
 
 {% block content %}
-<h1>Pick a hand to analyze</h1>
-<h2>Selected cards</h2>
-<img src="static/cards/blank_card.png" height=200px, id="1">
-<img src="static/cards/blank_card.png" height=200px, id="2">
-<img src="static/cards/blank_card.png" height=200px, id="3">
-<img src="static/cards/blank_card.png" height=200px, id="4">
-<img src="static/cards/blank_card.png" height=200px, id="5">
-<h3><a href="#" id="6" style="display: none">Analyze this hand</a></h3>
-<hr>
+<div class="container">
+  <div class="row mt-4 mb-2">
+    <h1>Video Poker Hand Analyzer - Jacks or Better</h1>
+  </div>
 
-{% for suit in suits %}
-  {% for rank in ranks %}
-    <img src="static/cards/{{ rank }}{{ suit }}.png" height="100px" onClick="card_click(this.id)" id="{{ rank }}{{ suit }}">
+  <div class="row">
+    <img src="static/cards/blank_card.png" height=200px, id="1" class="mr-2">
+    <img src="static/cards/blank_card.png" height=200px, id="2" class="mr-2">
+    <img src="static/cards/blank_card.png" height=200px, id="3" class="mr-2">
+    <img src="static/cards/blank_card.png" height=200px, id="4" class="mr-2">
+    <img src="static/cards/blank_card.png" height=200px, id="5" class="mr-2">
+  </div>
+  <div class="row mt-3">
+    <button id="7" style="display: inline" class="btn btn-primary mr-3" onClick="reset_cards()">Reset Selection</button>
+    <a href="#" id="6" style="display: none" class="btn btn-primary">Analyze Hand</a>
+  </div>
+
+  <div class="row mt-3">
+    <h3>Selected five cards from the deck below to make a hand</h3>
+  </div>
+
+  {% for suit in suits %}
+  <div class="row mt-2">
+    {% for rank in ranks %}
+      <img src="static/cards/{{ rank }}{{ suit }}.png" height="100px" onClick="card_click(this.id)" id="{{ rank }}{{ suit }}" class="mr-2">
+    {% endfor %}
+  </div>
   {% endfor %}
-  <br>
-{% endfor %}
+</div>
+
 
 <script type="text/javascript">
 var click_count = 0;
@@ -29,7 +43,7 @@ var clicked_cards = [];
 
 function card_click(clicked_id)
 {
-  if (!clicked_cards.includes(clicked_id)) {
+  if ((!clicked_cards.includes(clicked_id)) & (click_count < 5)) {
     clicked_cards.push(clicked_id);
     click_count++;
     src_string="static/cards/" + clicked_id + ".png";
@@ -48,6 +62,24 @@ function card_click(clicked_id)
     }
     document.getElementById("6").href = link_string;
   }
+}
+
+function reset_cards()
+{
+  document.getElementById("1").src="static/cards/blank_card.png";
+  document.getElementById("2").src="static/cards/blank_card.png";
+  document.getElementById("3").src="static/cards/blank_card.png";
+  document.getElementById("4").src="static/cards/blank_card.png";
+  document.getElementById("5").src="static/cards/blank_card.png";
+
+  for (var i = 0; i < clicked_cards.length; i++) {
+    src_string="static/cards/" + clicked_cards[i] + ".png";
+    document.getElementById(clicked_cards[i]).src=src_string;
+  }
+
+  click_count = 0;
+  link_string = "/";
+  clicked_cards = [];
 }
 </script>
 

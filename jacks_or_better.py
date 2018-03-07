@@ -60,7 +60,11 @@ def analyze(hand_string):
     score = score_hand(hand)
     hand_to_hold = analyze_hand(hand)
     hold_cards = [str(card) for card in hand_to_hold.cards]
-    context = {'cards':cards, 'score':score, 'hold_cards':hold_cards}
+    if score != "Not a Winning Hand":
+        winning_hand = True
+    else:
+        winning_hand = False
+    context = {'cards':cards, 'score':score, 'hold_cards':hold_cards, 'winning_hand':winning_hand}
     return render_template('analyze.html', **context)
 
 app.run(debug=True)
