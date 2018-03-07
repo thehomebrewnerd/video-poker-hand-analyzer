@@ -14,7 +14,7 @@
   <div class="row mt-2 text-center">
     <div class="col-md-8">
     {% for card in cards %}
-      <img src="static/cards/{{ card }}.png" height="200px" class="mr-2"
+      <img src="/static/cards/{{ card }}.png" height="200px" class="mr-2"
         {% if card in hold_cards %} style="border: 3px solid maroon" {% endif %}>
     {% endfor %}
   </div>

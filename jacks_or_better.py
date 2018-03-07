@@ -35,7 +35,7 @@ def pick_hand():
     }
     return render_template('pick_hand.html', **context)
 
-@app.route('/<hand_string>')
+@app.route('/hand/<hand_string>')
 def analyze(hand_string):
     rank_dict = {
         '2':2,
@@ -54,7 +54,7 @@ def analyze(hand_string):
     }
 
     cards = hand_string.split('-')
-    card_list = [Card(card[1], rank_dict[card[0]]) for card in cards]
+    card_list = [Card(item[1], rank_dict[item[0]]) for item in cards]
     hand = Hand(card_list)
     score = score_hand(hand)
     hand_to_hold = analyze_hand(hand)
