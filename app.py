@@ -66,4 +66,5 @@ def analyze(hand_string):
     context = {'cards':cards, 'score':score, 'hold_cards':hold_cards, 'winning_hand':winning_hand}
     return render_template('analyze.html', **context)
 
-app.run()
+if __name__ == "__main__":
+    app.run()
