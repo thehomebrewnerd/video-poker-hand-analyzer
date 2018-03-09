@@ -2,7 +2,6 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from card import Card
-from hand import Hand
 from score import score_hand
 from analyze import analyze_hand
 
@@ -35,36 +34,38 @@ def pick_hand():
     }
     return render_template('pick_hand.html', **context)
 
-@app.route('/hand/<hand_string>')
+@app.route('/analyze/<hand_string>')
 def analyze(hand_string):
-    rank_dict = {
-        '2':2,
-        '3':3,
-        '4':4,
-        '5':5,
-        '6':6,
-        '7':7,
-        '8':8,
-        '9':9,
-        'T':10,
-        'J':11,
-        'Q':12,
-        'K':13,
-        'A':14,
-    }
-
     cards = hand_string.split('-')
-    card_list = [Card(item[1], rank_dict[item[0]]) for item in cards]
-    hand = Hand(card_list)
-    score = score_hand(hand)
-    hand_to_hold = analyze_hand(hand)
-    hold_cards = [str(card) for card in hand_to_hold.cards]
+    card_list = [Card(item) for item in cards]
+    score = score_hand(card_list)
+    ev_list = analyze_hand(card_list)
+    # get the list of cards for the highest rated play in the expected value list
+    hand_to_hold = ev_list[0][0]
+    hold_cards = [str(card) for card in hand_to_hold]
+
+    plays_context = [get_play_string(row[0]) for row in ev_list]
+    ev_context = [row[1] for row in ev_list]
+
     if score != "Not a Winning Hand":
         winning_hand = True
     else:
         winning_hand = False
-    context = {'cards':cards, 'score':score, 'hold_cards':hold_cards, 'winning_hand':winning_hand}
+
+    context = {'cards':cards, 'score':score, 'hold_cards':hold_cards, 'winning_hand':winning_hand, \
+            'plays':plays_context, 'ev':ev_context}
     return render_template('analyze.html', **context)
 
+def get_play_string(input_list):
+    output_string = ''
+
+    if len(input_list) == 0:
+        return "None"
+    else:
+        for item in input_list:
+            output_string = output_string + item + ' '
+
+    return output_string
+
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

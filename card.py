@@ -1,7 +1,23 @@
 class Card():
-    def __init__(self, suit, rank):
-        self.suit = suit
-        self.rank = rank
+    def __init__(self, card_str):
+        rank_dict = {
+            '2':2,
+            '3':3,
+            '4':4,
+            '5':5,
+            '6':6,
+            '7':7,
+            '8':8,
+            '9':9,
+            'T':10,
+            'J':11,
+            'Q':12,
+            'K':13,
+            'A':14,
+        }
+
+        self.suit = card_str[1]
+        self.rank = rank_dict[card_str[0]]
         if self.rank > 10:
             self.is_high = True
         else:

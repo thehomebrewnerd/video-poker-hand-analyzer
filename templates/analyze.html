@@ -38,4 +38,26 @@
       <h3><a href="/" class="btn btn-primary">Analyze Another Hand</a></h3>
     </div>
   </div>
+
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <h4>Possible Plays Detail</h4>
+      <table class="table table-sm table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th>Hold Cards</th>
+            <th>Expected Value</th>
+          <tr>
+        <thead>
+          <tbody>
+          {% for play in plays %}
+          <tr>
+            <td>{{ play }}</td>
+            <td>{{ ev[loop.index0] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 {% endblock %}

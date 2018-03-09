@@ -36,7 +36,7 @@ Pick a Hand
 
 <script type="text/javascript">
 var click_count = 0;
-var link_string = "/hand/";
+var link_string = "/analyze/";
 var clicked_cards = [];
 var cards_left = 5;
 
@@ -80,7 +80,7 @@ function reset_cards()
   }
 
   click_count = 0;
-  link_string = "/hand/";
+  link_string = "/analyze/";
   clicked_cards = [];
   cards_left = 5;
   document.getElementById("cards_to_pick").innerHTML=cards_left.toString();
