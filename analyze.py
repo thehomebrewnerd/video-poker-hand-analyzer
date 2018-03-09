@@ -139,7 +139,7 @@ def get_straight_flush_prob(held_cards, deck):
     if len(held_cards)==5:
         # if all cards are held, check if the hand is a straight flush. If it is,
         # return 1 otherwise return 0
-        if score.score_straight_flush(held_cards):
+        if score.score_straight_flush(held_cards) and not score.score_royal_flush(held_cards):
             return 1
         else:
             return 0
